@@ -37,7 +37,7 @@ export default {
       { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml' },
       { test: /\.(jpe?g|png|gif)$/i, loader: 'file?name=[name].[ext]' },
       { test: /\.ico$/, loader: 'file?name=[name].[ext]' },
-      { test: /(\.css|\.scss)$/, loaders: ['style', 'css?sourceMap', 'postcss'] },
+      { test: /(\.css|\.scss)$/, loaders: ['style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss'] },
     ],
   },
   postcss: () => [autoprefixer],

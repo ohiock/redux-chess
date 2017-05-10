@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 
 import ChessSquare from './ChessSquare';
 
+import styles from './ChessBoard.scss';
+
 const propTypes = {
-  colorOne: PropTypes.string.isRequired,
-  colorTwo: PropTypes.string.isRequired,
+  squareColorOne: PropTypes.string.isRequired,
+  squareColorTwo: PropTypes.string.isRequired,
+  borderColor: PropTypes.string.isRequired,
   squareCount: PropTypes.number.isRequired,
 };
 
@@ -24,9 +27,24 @@ class ChessBoard extends React.Component {
 
   getSquares() {
     const squares = [];
+    let rowCount = 0;
 
     for (let i = 0; i < this.props.squareCount; i += 1) {
-      const color = i % 2 === 0 ? this.props.colorOne : this.props.colorTwo;
+      let color;
+
+      if (i % 8 === 0) {
+        rowCount += 1;
+      }
+
+      if (rowCount % 2 === 0) {
+        color = i % 2 === 0
+          ? this.props.squareColorTwo
+          : this.props.squareColorOne;
+      } else {
+        color = i % 2 === 0
+          ? this.props.squareColorOne
+          : this.props.squareColorTwo;
+      }
 
       squares.push(<ChessSquare key={i} color={color} />);
     }
@@ -36,7 +54,7 @@ class ChessBoard extends React.Component {
 
   render() {
     return (
-      <div id="ChessBoard">
+      <div id={styles.Container} style={{ backgroundColor: this.props.borderColor }}>
         {this.state.squares.map(square => square)}
       </div>
     );

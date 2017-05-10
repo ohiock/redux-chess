@@ -1,8 +1,9 @@
 const Constants = {
   Board: {
     Colors: {
-      ColorOne: '#FFFFFF',
-      ColorTwo: '#000000',
+      SquareColorOne: '#FFFFFF',
+      SquareColorTwo: '#000000',
+      BorderColor: '#000000',
     },
     SquareCount: 64,
   },

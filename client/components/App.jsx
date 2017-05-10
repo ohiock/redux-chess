@@ -6,8 +6,9 @@ import Constants from '../util/constants';
 const App = () => (
   <div>
     <ChessBoard
-      colorOne={Constants.Board.Colors.ColorOne}
-      colorTwo={Constants.Board.Colors.ColorTwo}
+      squareColorOne={Constants.Board.Colors.SquareColorOne}
+      squareColorTwo={Constants.Board.Colors.SquareColorTwo}
+      borderColor={Constants.Board.Colors.BorderColor}
       squareCount={Constants.Board.SquareCount}
     />
   </div>
