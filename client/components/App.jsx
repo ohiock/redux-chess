@@ -1,19 +1,16 @@
-import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
+import React from 'react';
 
-const App = props => (
+import ChessBoard from './chessBoard/ChessBoard';
+import Constants from '../util/constants';
+
+const App = () => (
   <div>
-    <ul>
-      <li><IndexLink to="/">Home</IndexLink></li>
-      <li><Link to="/counter">Counter</Link></li>
-    </ul>
-    <br />
-    { props.children }
+    <ChessBoard
+      colorOne={Constants.Board.Colors.ColorOne}
+      colorTwo={Constants.Board.Colors.ColorTwo}
+      squareCount={Constants.Board.SquareCount}
+    />
   </div>
 );
-
-App.propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 export default App;

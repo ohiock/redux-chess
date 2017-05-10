@@ -6,11 +6,13 @@
   "scripts": {
     "start": "babel-node config/webpack-dev-server.js",
     "test": "jest",
+    "test:update": "jest --updateSnapshot",
     "test:watch": "jest --watch"
   },
   "author": "Terrence Bowman",
   "license": "ISC",
   "dependencies": {
+    "prop-types": "^15.5.8",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
@@ -51,7 +53,12 @@
     "webpack-dev-server": "^1.16.2"
   },
   "jest": {
-    "moduleFileExtensions": ["js", "jsx"],
-    "moduleDirectories": ["node_modules"]
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
   }
 }
