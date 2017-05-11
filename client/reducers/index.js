@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
-import counterReducer from './counterReducer';
+import chessBoardReducer from './chessBoardReducers';
 
 const rootReducer = combineReducers({
-  counterReducer,
+  chessBoard: chessBoardReducer,
   routing: routerReducer,
 });
 

@@ -1,9 +1,7 @@
-import { fork } from 'redux-saga';
-
-import counter from './counterSaga';
+// import { fork } from 'redux-saga';
 
 function* rootSaga() {
-  yield fork(counter);
+  // saga will go here
 }
 
 export default rootSaga;

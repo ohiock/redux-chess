@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import ChessSquare from './ChessSquare';
+import { setupNewMatch } from '../../actions/chessBoardActions';
 
 import styles from './ChessBoard.scss';
 
@@ -10,6 +12,7 @@ const propTypes = {
   squareColorTwo: PropTypes.string.isRequired,
   borderColor: PropTypes.string.isRequired,
   squareCount: PropTypes.number.isRequired,
+  setupNewMatch: PropTypes.func.isRequired,
 };
 
 class ChessBoard extends React.Component {
@@ -23,9 +26,11 @@ class ChessBoard extends React.Component {
 
   componentWillMount() {
     this.getSquares();
+    this.props.setupNewMatch();
   }
 
   getSquares() {
+    const files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const squares = [];
     let rowCount = 0;
 
@@ -46,7 +51,9 @@ class ChessBoard extends React.Component {
           : this.props.squareColorTwo;
       }
 
-      squares.push(<ChessSquare key={i} color={color} />);
+      const position = files[i - ((rowCount - 1) * 8)] + (8 - (rowCount - 1));
+
+      squares.push(<ChessSquare key={i} color={color} position={position} />);
     }
 
     this.setState({ squares });
@@ -54,7 +61,7 @@ class ChessBoard extends React.Component {
 
   render() {
     return (
-      <div id={styles.Container} style={{ backgroundColor: this.props.borderColor }}>
+      <div id={styles.Container} style={{ borderColor: this.props.borderColor }}>
         {this.state.squares.map(square => square)}
       </div>
     );
@@ -63,4 +70,8 @@ class ChessBoard extends React.Component {
 
 ChessBoard.propTypes = propTypes;
 
-export default ChessBoard;
+const mapDispatchToProps = dispatch => ({
+  setupNewMatch: () => dispatch(setupNewMatch()),
+});
+
+export default connect(null, mapDispatchToProps)(ChessBoard);
