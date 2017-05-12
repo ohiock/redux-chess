@@ -2,7 +2,6 @@ import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import rootReducer from '../reducers';
-import counterWatcher from '../sagas/counterSaga';
 
 export default function configureStore(initialState) {
   const middlewares = [];
@@ -23,7 +22,7 @@ export default function configureStore(initialState) {
     applyMiddleware(...middlewares),
   );
 
-  sagaMiddleware.run(counterWatcher);
+  // sagaMiddleware.run();
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
