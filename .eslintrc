@@ -12,7 +12,8 @@
     "react/no-unescaped-entities": [0],
     "jsx-a11y/img-has-alt": [0],
     "jsx-a11y/redundant-alt": [0],
-    "jsx-a11y/valid-aria-role": [0]
+    "jsx-a11y/valid-aria-role": [0],
+    "jsx-a11y/no-static-element-interactions": [0],
   },
   "plugins": ["react"],
   "parser": "babel-eslint",
