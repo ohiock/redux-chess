@@ -1,4 +1,4 @@
-.Container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,16 +7,16 @@
   height: 10vw;
 }
 
-.Container:hover {
+.selected-piece {
   animation: pulse 1.5s infinite ease-in-out;
 }
 
 @keyframes pulse {
   0%, 100% {
-    background-color: red;
+    opacity: 1;
   }
 
   50% {
-    background-color: pink;
+    opacity: .8;
   }
 }

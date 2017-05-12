@@ -12,9 +12,31 @@ const propTypes = {
 };
 
 class ChessSquare extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      styles: {},
+      pieceSelected: false,
+    };
+
+    this.selectPiece = this.selectPiece.bind(this);
+  }
+
+  componentWillMount() {
+    this.setState({ className: styles.container });
+  }
+
+  selectPiece() {
+    this.setState({
+      className: `${styles.container} ${!this.state.pieceSelected ? styles['selected-piece'] : ''}`,
+      pieceSelected: !this.state.pieceSelected,
+    });
+  }
+
   render() {
     return (
-      <div className={styles.Container} style={{ background: this.props.color }}>
+      <div className={this.state.className} style={{ background: this.props.color }} onClick={this.selectPiece}>
         <ChessPiece currentPiece={this.props.chessBoard.positions[this.props.position]} />
       </div>
     );
