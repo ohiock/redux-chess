@@ -22,57 +22,10 @@ class ChessPiece extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.getPiece(this.props.currentPiece);
-  }
-
-  getPiece(currentPiece) {
-    switch (currentPiece) {
-      case Constants.Pieces.PlayerOne.Pawn:
-        this.setState({ piece: '♟' });
-        break;
-      case Constants.Pieces.PlayerTwo.Pawn:
-        this.setState({ piece: '♙' });
-        break;
-      case Constants.Pieces.PlayerOne.Knight:
-        this.setState({ piece: '♞' });
-        break;
-      case Constants.Pieces.PlayerTwo.Knight:
-        this.setState({ piece: '♘' });
-        break;
-      case Constants.Pieces.PlayerOne.Bishop:
-        this.setState({ piece: '♝' });
-        break;
-      case Constants.Pieces.PlayerTwo.Bishop:
-        this.setState({ piece: '♗' });
-        break;
-      case Constants.Pieces.PlayerOne.Rook:
-        this.setState({ piece: '♜' });
-        break;
-      case Constants.Pieces.PlayerTwo.Rook:
-        this.setState({ piece: '♖' });
-        break;
-      case Constants.Pieces.PlayerOne.Queen:
-        this.setState({ piece: '♛' });
-        break;
-      case Constants.Pieces.PlayerTwo.Queen:
-        this.setState({ piece: '♕' });
-        break;
-      case Constants.Pieces.PlayerOne.King:
-        this.setState({ piece: '♚' });
-        break;
-      case Constants.Pieces.PlayerTwo.King:
-        this.setState({ piece: '♔' });
-        break;
-      default:
-        break;
-    }
-  }
-
   render() {
     return (
       <div className={styles.container}>
-        {this.state.piece}
+        {this.props.currentPiece}
       </div>
     );
   }
