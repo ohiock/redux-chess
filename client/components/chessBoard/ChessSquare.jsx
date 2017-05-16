@@ -11,7 +11,12 @@ const propTypes = {
   chessBoard: PropTypes.object.isRequired,
 };
 
-class ChessSquare extends React.Component {
+const mapStateToProps = state => ({
+  chessBoard: state.chessBoard,
+});
+
+@connect(mapStateToProps, null)
+export default class ChessSquare extends React.Component {
   constructor(props) {
     super(props);
 
@@ -44,9 +49,3 @@ class ChessSquare extends React.Component {
 }
 
 ChessSquare.propTypes = propTypes;
-
-const mapStateToProps = state => ({
-  chessBoard: state.chessBoard,
-});
-
-export default connect(mapStateToProps, null)(ChessSquare);

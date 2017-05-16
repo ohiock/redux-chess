@@ -15,7 +15,12 @@ const propTypes = {
   setupNewMatch: PropTypes.func.isRequired,
 };
 
-class ChessBoard extends React.Component {
+const mapDispatchToProps = dispatch => ({
+  setupNewMatch: () => dispatch(setupNewMatch()),
+});
+
+@connect(null, mapDispatchToProps)
+export default class ChessBoard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -69,9 +74,3 @@ class ChessBoard extends React.Component {
 }
 
 ChessBoard.propTypes = propTypes;
-
-const mapDispatchToProps = dispatch => ({
-  setupNewMatch: () => dispatch(setupNewMatch()),
-});
-
-export default connect(null, mapDispatchToProps)(ChessBoard);
