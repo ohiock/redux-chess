@@ -41,7 +41,7 @@ export default class ChessSquare extends React.Component {
 
   render() {
     return (
-      <div className={this.state.className} style={{ background: this.props.color }} onClick={this.selectPiece}>
+      <div className={this.state.className} style={{ backgroundColor: this.props.color }} onClick={this.selectPiece}>
         <ChessPiece currentPiece={this.props.chessBoard.positions[this.props.position]} />
       </div>
     );

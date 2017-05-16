@@ -25,6 +25,9 @@ const Constants = {
       King: '♔',
     },
   },
+  DraggableItemTypes: {
+    ChessPiece: 'ChessPiece',
+  },
 };
 
 export default Constants;

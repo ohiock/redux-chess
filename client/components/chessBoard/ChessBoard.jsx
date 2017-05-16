@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
 import ChessSquare from './ChessSquare';
 import { setupNewMatch } from '../../actions/chessBoardActions';
@@ -20,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 @connect(null, mapDispatchToProps)
+@DragDropContext(HTML5Backend)
 export default class ChessBoard extends React.Component {
   constructor(props) {
     super(props);
