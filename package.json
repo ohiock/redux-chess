@@ -1,7 +1,7 @@
 {
-  "name": "redux-starter",
+  "name": "redux-chess",
   "version": "1.0.0",
-  "description": "A very simple starter project for redux applications",
+  "description": "The game of chess implemented in JavaScript with React and Redux",
   "main": "index.js",
   "scripts": {
     "start": "babel-node config/webpack-dev-server.js",
