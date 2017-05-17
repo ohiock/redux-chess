@@ -9,14 +9,6 @@ import { setupNewMatch } from '../../actions/chessBoardActions';
 
 import styles from './ChessBoard.scss';
 
-const propTypes = {
-  squareColorOne: PropTypes.string.isRequired,
-  squareColorTwo: PropTypes.string.isRequired,
-  borderColor: PropTypes.string.isRequired,
-  squareCount: PropTypes.number.isRequired,
-  setupNewMatch: PropTypes.func.isRequired,
-};
-
 const mapDispatchToProps = dispatch => ({
   setupNewMatch: () => dispatch(setupNewMatch()),
 });
@@ -24,6 +16,14 @@ const mapDispatchToProps = dispatch => ({
 @connect(null, mapDispatchToProps)
 @DragDropContext(HTML5Backend)
 export default class ChessBoard extends React.Component {
+  static propTypes = {
+    squareColorOne: PropTypes.string.isRequired,
+    squareColorTwo: PropTypes.string.isRequired,
+    borderColor: PropTypes.string.isRequired,
+    squareCount: PropTypes.number.isRequired,
+    setupNewMatch: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -75,5 +75,3 @@ export default class ChessBoard extends React.Component {
     );
   }
 }
-
-ChessBoard.propTypes = propTypes;

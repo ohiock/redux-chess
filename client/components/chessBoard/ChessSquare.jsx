@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import ChessPiece from '../chessPieces/ChessPiece';
 import styles from './ChessSquare.scss';
 
-const propTypes = {
-  color: PropTypes.string.isRequired,
-  position: PropTypes.string.isRequired,
-  chessBoard: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = state => ({
   chessBoard: state.chessBoard,
 });
 
 @connect(mapStateToProps, null)
 export default class ChessSquare extends React.Component {
+  static propTypes = {
+    color: PropTypes.string.isRequired,
+    position: PropTypes.string.isRequired,
+    chessBoard: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
 
@@ -47,5 +47,3 @@ export default class ChessSquare extends React.Component {
     );
   }
 }
-
-ChessSquare.propTypes = propTypes;
