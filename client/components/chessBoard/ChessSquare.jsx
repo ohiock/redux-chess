@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 
 import Constants from '../../util/constants';
-import ChessPiece from '../chessPieces/ChessPiece';
 import styles from './ChessSquare.scss';
-
-const mapStateToProps = state => ({
-  chessBoard: state.chessBoard,
-});
 
 const chessSquareTarget = {
   drop(props) {
@@ -22,16 +16,18 @@ const collect = (dndConnect, monitor) => ({
   isOver: monitor.isOver(),
 });
 
-@connect(mapStateToProps, null)
 @DropTarget(Constants.DraggableItemTypes.ChessPiece, chessSquareTarget, collect)
 export default class ChessSquare extends React.Component {
   static propTypes = {
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
-    position: PropTypes.string.isRequired,
-    chessBoard: PropTypes.object.isRequired,
+    children: PropTypes.object,
   };
+
+  static defaultProps = {
+    children: {},
+  }
 
   constructor(props) {
     super(props);
@@ -58,7 +54,7 @@ export default class ChessSquare extends React.Component {
   render() {
     return this.props.connectDropTarget(
       <div className={this.state.className} style={{ backgroundColor: this.props.isOver ? 'blue' : this.props.color }} onClick={this.selectPiece}>
-        <ChessPiece currentPiece={this.props.chessBoard.positions[this.props.position]} />
+        {this.props.children}
       </div>
     );
   }

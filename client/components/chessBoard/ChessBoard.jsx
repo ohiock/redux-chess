@@ -5,15 +5,20 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
 import ChessSquare from './ChessSquare';
+import ChessPiece from '../chessPieces/ChessPiece';
 import { setupNewMatch } from '../../actions/chessBoardActions';
 
 import styles from './ChessBoard.scss';
+
+const mapStateToProps = state => ({
+  chessBoard: state.chessBoard,
+});
 
 const mapDispatchToProps = dispatch => ({
   setupNewMatch: () => dispatch(setupNewMatch()),
 });
 
-@connect(null, mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 @DragDropContext(HTML5Backend)
 export default class ChessBoard extends React.Component {
   static propTypes = {
@@ -22,6 +27,7 @@ export default class ChessBoard extends React.Component {
     borderColor: PropTypes.string.isRequired,
     squareCount: PropTypes.number.isRequired,
     setupNewMatch: PropTypes.func.isRequired,
+    chessBoard: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -33,11 +39,14 @@ export default class ChessBoard extends React.Component {
   }
 
   componentWillMount() {
-    this.getSquares();
     this.props.setupNewMatch();
   }
 
-  getSquares() {
+  componentWillReceiveProps(nextProps) {
+    this.getSquares(nextProps.chessBoard.positions);
+  }
+
+  getSquares(chessBoardPositions) {
     const files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const squares = [];
     let rowCount = 0;
@@ -61,7 +70,11 @@ export default class ChessBoard extends React.Component {
 
       const position = files[i - ((rowCount - 1) * 8)] + (8 - (rowCount - 1));
 
-      squares.push(<ChessSquare key={i} color={color} position={position} />);
+      squares.push(
+        <ChessSquare key={i} color={color} position={position}>
+          <ChessPiece currentPiece={chessBoardPositions[position]} />
+        </ChessSquare>
+      );
     }
 
     this.setState({ squares });
