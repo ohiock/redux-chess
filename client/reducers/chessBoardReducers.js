@@ -1,10 +1,10 @@
+import _ from 'lodash';
 import { createReducer } from 'redux-act';
 
-import { setupNewMatch } from '../actions/chessBoardActions';
+import { setupNewMatch, moveChessPiece } from '../actions/chessBoardActions';
 import Constants from '../util/constants';
 
 const initialState = {
-  lastUpdate: new Date(),
   positions: {
     A1: null,
     A2: null,
@@ -110,17 +110,17 @@ const setupNewMatchReducer = state => Object.assign({}, state, {
   },
 });
 
-const moveChessPiece = (state, action) => Object.assign({}, state, {
+const moveChessPieceReducer = (state, action) => Object.assign({}, state, {
   positions: {
     ...state.positions,
-    [action.nextPosition]: Constants.Pieces.PlayerOne.Pawn,
+    [action.nextPosition]: state.positions[action.currentPosition],
     [action.currentPosition]: null,
   },
 });
 
 const reducerMap = createReducer({
   [setupNewMatch]: state => setupNewMatchReducer(state),
-  [moveChessPiece]: state => moveChessPiece(state),
+  [moveChessPiece]: (state, action) => moveChessPieceReducer(state, action),
 }, initialState);
 
 export default reducerMap;

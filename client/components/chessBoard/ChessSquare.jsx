@@ -15,7 +15,7 @@ const chessSquareTarget = {
   drop(props, monitor) {
     const item = monitor.getItem();
 
-    props.moveChessPiece(props.position, item.position);
+    props.moveChessPiece(item.position, props.position);
 
     return undefined;
   },
