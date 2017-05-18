@@ -27,7 +27,6 @@ export default class ChessBoard extends React.Component {
     borderColor: PropTypes.string.isRequired,
     squareCount: PropTypes.number.isRequired,
     setupNewMatch: PropTypes.func.isRequired,
-    chessBoard: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -43,7 +42,7 @@ export default class ChessBoard extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getSquares(nextProps.chessBoard.positions);
+    this.getSquares(nextProps.chessBoard.positions); // eslint-disable-line
   }
 
   getSquares(chessBoardPositions) {
@@ -72,8 +71,8 @@ export default class ChessBoard extends React.Component {
 
       squares.push(
         <ChessSquare key={i} color={color} position={position}>
-          <ChessPiece currentPiece={chessBoardPositions[position]} />
-        </ChessSquare>
+          <ChessPiece currentPiece={chessBoardPositions[position]} position={position} />
+        </ChessSquare>,
       );
     }
 

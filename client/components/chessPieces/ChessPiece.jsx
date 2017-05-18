@@ -8,7 +8,7 @@ import styles from './ChessPiece.scss';
 
 const chessPieceSource = {
   beginDrag(props) {
-    return {};
+    return { position: props.position };
   },
 };
 
