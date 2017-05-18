@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { createReducer } from 'redux-act';
 
 import { setupNewMatch, moveChessPiece } from '../actions/chessBoardActions';

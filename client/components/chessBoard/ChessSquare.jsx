@@ -64,7 +64,7 @@ export default class ChessSquare extends React.Component {
 
   render() {
     return this.props.connectDropTarget(
-      <div className={this.state.className} style={{ backgroundColor: this.props.isOver ? 'blue' : this.props.color }} onClick={this.selectPiece}>
+      <div className={this.state.className} style={{ backgroundColor: this.props.color }} onClick={this.selectPiece}>
         {this.props.children}
       </div>,
     );
