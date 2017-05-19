@@ -7,6 +7,10 @@ import Constants from '../../util/constants';
 import styles from './ChessSquare.scss';
 import { moveChessPiece } from '../../actions/chessBoardActions';
 
+const mapStateToProps = state => ({
+  validMoves: state.chessBoard.validMoves
+});
+
 const mapDispatchToProps = dispatch => ({
   moveChessPiece: (currentPosition, nextPosition) => dispatch(moveChessPiece(currentPosition, nextPosition)),
 });
@@ -26,11 +30,12 @@ const collect = (dndConnect, monitor) => ({
   isOver: monitor.isOver(),
 });
 
-@connect(null, mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 @DropTarget(Constants.DraggableItemTypes.ChessPiece, chessSquareTarget, collect)
 export default class ChessSquare extends React.Component {
   static propTypes = {
-    isValidMove: PropTypes.bool.isRequired,
+    validMoves: PropTypes.array.isRequired, // eslint-disable-line
+    position: PropTypes.string.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
@@ -46,28 +51,18 @@ export default class ChessSquare extends React.Component {
 
     this.state = {
       styles: {},
-      pieceSelected: false,
     };
-
-    this.selectPiece = this.selectPiece.bind(this);
   }
 
   componentWillMount() {
     this.setState({ className: styles.container });
   }
 
-  selectPiece() {
-    this.setState({
-      className: `${styles.container} ${!this.state.pieceSelected ? styles['selected-piece'] : ''}`,
-      pieceSelected: !this.state.pieceSelected,
-    });
-  }
-
   render() {
     return this.props.connectDropTarget(
       <div
-        className={styles.container}
-        style={{ backgroundColor: this.props.isValidMove ? 'white' : this.props.color }}
+        className={`${styles.container} ${this.props.validMoves.includes(this.props.position) ? styles['selected-piece'] : ''}`}
+        style={{ backgroundColor: this.props.color }}
         onClick={this.selectPiece}
       >
         {this.props.children}
