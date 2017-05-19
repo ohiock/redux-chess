@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => ({
 @DragDropContext(HTML5Backend)
 export default class ChessBoard extends React.Component {
   static propTypes = {
+    chessBoard: PropTypes.object.isRequired, // eslint-disable-line
     squareColorOne: PropTypes.string.isRequired,
     squareColorTwo: PropTypes.string.isRequired,
     borderColor: PropTypes.string.isRequired,
@@ -70,7 +71,7 @@ export default class ChessBoard extends React.Component {
       const position = files[i - ((rowCount - 1) * 8)] + (8 - (rowCount - 1));
 
       squares.push(
-        <ChessSquare key={i} color={color} position={position}>
+        <ChessSquare key={i} color={color} position={position} isValidMove={this.props.chessBoard.validMoves.includes(position)}>
           <ChessPiece currentPiece={chessBoardPositions[position]} position={position} />
         </ChessSquare>,
       );

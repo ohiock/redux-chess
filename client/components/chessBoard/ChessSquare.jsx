@@ -30,6 +30,7 @@ const collect = (dndConnect, monitor) => ({
 @DropTarget(Constants.DraggableItemTypes.ChessPiece, chessSquareTarget, collect)
 export default class ChessSquare extends React.Component {
   static propTypes = {
+    isValidMove: PropTypes.bool.isRequired,
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
@@ -64,7 +65,11 @@ export default class ChessSquare extends React.Component {
 
   render() {
     return this.props.connectDropTarget(
-      <div className={this.state.className} style={{ backgroundColor: this.props.color }} onClick={this.selectPiece}>
+      <div
+        className={styles.container}
+        style={{ backgroundColor: this.props.isValidMove ? 'white' : this.props.color }}
+        onClick={this.selectPiece}
+      >
         {this.props.children}
       </div>,
     );

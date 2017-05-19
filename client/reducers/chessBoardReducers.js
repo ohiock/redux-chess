@@ -1,75 +1,15 @@
 import { createReducer } from 'redux-act';
 
-import { setupNewMatch, moveChessPiece } from '../actions/chessBoardActions';
 import Constants from '../util/constants';
+import {
+  setupNewMatch,
+  moveChessPiece,
+  markValidMoves,
+} from '../actions/chessBoardActions';
 
 const initialState = {
-  positions: {
-    A1: null,
-    A2: null,
-    A3: null,
-    A4: null,
-    A5: null,
-    A6: null,
-    A7: null,
-    A8: null,
-    B1: null,
-    B2: null,
-    B3: null,
-    B4: null,
-    B5: null,
-    B6: null,
-    B7: null,
-    B8: null,
-    C1: null,
-    C2: null,
-    C3: null,
-    C4: null,
-    C5: null,
-    C6: null,
-    C7: null,
-    C8: null,
-    D1: null,
-    D2: null,
-    D3: null,
-    D4: null,
-    D5: null,
-    D6: null,
-    D7: null,
-    D8: null,
-    E1: null,
-    E2: null,
-    E3: null,
-    E4: null,
-    E5: null,
-    E6: null,
-    E7: null,
-    E8: null,
-    F1: null,
-    F2: null,
-    F3: null,
-    F4: null,
-    F5: null,
-    F6: null,
-    F7: null,
-    F8: null,
-    G1: null,
-    G2: null,
-    G3: null,
-    G4: null,
-    G5: null,
-    G6: null,
-    G7: null,
-    G8: null,
-    H1: null,
-    H2: null,
-    H3: null,
-    H4: null,
-    H5: null,
-    H6: null,
-    H7: null,
-    H8: null,
-  },
+  positions: { },
+  validMoves: [],
 };
 
 const setupNewMatchReducer = state => Object.assign({}, state, {
@@ -117,9 +57,14 @@ const moveChessPieceReducer = (state, action) => Object.assign({}, state, {
   },
 });
 
+const markValidMovesReducer = (state, action) => Object.assign({}, state, {
+  validMoves: action.validMoves,
+});
+
 const reducerMap = createReducer({
   [setupNewMatch]: state => setupNewMatchReducer(state),
   [moveChessPiece]: (state, action) => moveChessPieceReducer(state, action),
+  [markValidMoves]: (state, action) => markValidMovesReducer(state, action),
 }, initialState);
 
 export default reducerMap;
