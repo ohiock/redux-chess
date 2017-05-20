@@ -13,15 +13,15 @@ export const getValidP1PawnMoves = (position, positions) => {
   const validMoves = [];
   const coordinates = getCoordinates(position);
 
-  const leftAttack = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
-  const rightAttack = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+  const leftCapture = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+  const rightCapture = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
 
-  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftAttack])) {
-    validMoves.push(leftAttack);
+  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftCapture])) {
+    validMoves.push(leftCapture);
   }
 
-  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightAttack])) {
-    validMoves.push(rightAttack);
+  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightCapture])) {
+    validMoves.push(rightCapture);
   }
 
   const forwardOneCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
