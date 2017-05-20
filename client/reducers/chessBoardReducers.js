@@ -5,12 +5,13 @@ import {
   setupNewMatch,
   moveChessPiece,
   markValidMoves,
-  clearValidMoves
+  clearValidMoves,
 } from '../actions/chessBoardActions';
 
 const initialState = {
   positions: { },
   validMoves: [],
+  movementLog: [],
 };
 
 const setupNewMatchReducer = state => Object.assign({}, state, {
@@ -51,6 +52,10 @@ const setupNewMatchReducer = state => Object.assign({}, state, {
 });
 
 const moveChessPieceReducer = (state, action) => Object.assign({}, state, {
+  movementLog: [
+    ...state.movementLog,
+    { from: action.currentPosition, to: action.nextPosition },
+  ],
   positions: {
     ...state.positions,
     [action.nextPosition]: state.positions[action.currentPosition],

@@ -19,7 +19,6 @@ const mapDispatchToProps = dispatch => ({
 
 const chessPieceSource = {
   beginDrag(props) {
-    console.log(props.positions);
     props.markValidMoves(props.currentPiece, props.position, props.positions);
 
     return { position: props.position };
