@@ -13,28 +13,37 @@ export const getValidP1PawnMoves = (position, positions) => {
   const validMoves = [];
   const coordinates = getCoordinates(position);
 
-  const leftCapture = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
-  const rightCapture = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
-
-  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftCapture])) {
-    validMoves.push(leftCapture);
+  if (coordinates.y === 7) {
+    return [];
   }
 
-  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightCapture])) {
-    validMoves.push(rightCapture);
+  if (coordinates.x !== 0) {
+    const leftCapture = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+
+    if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftCapture])) {
+      validMoves.push(leftCapture);
+    }
+  }
+
+  if (coordinates.x !== 7) {
+    const rightCapture = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+
+    if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightCapture])) {
+      validMoves.push(rightCapture);
+    }
   }
 
   const forwardOneCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
-  const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 2].toString()}`;
-
   const forwardOnePiece = positions[forwardOneCoordinates];
-  const forwardTwoPiece = positions[forwardTwoCoordinates];
 
   if (!forwardOnePiece) {
     validMoves.push(forwardOneCoordinates);
   }
 
   if (coordinates.y === 1) {
+    const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 2].toString()}`;
+    const forwardTwoPiece = positions[forwardTwoCoordinates];
+
     if (!forwardOnePiece && !forwardTwoPiece) {
       validMoves.push(forwardTwoCoordinates);
     }
@@ -47,28 +56,37 @@ export const getValidP2PawnMoves = (position, positions) => {
   const validMoves = [];
   const coordinates = getCoordinates(position);
 
-  const leftCapture = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
-  const rightCapture = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
-
-  if (Object.values(Constants.Pieces.PlayerOne).includes(positions[leftCapture])) {
-    validMoves.push(leftCapture);
+  if (coordinates.y === 0) {
+    return [];
   }
 
-  if (Object.values(Constants.Pieces.PlayerOne).includes(positions[rightCapture])) {
-    validMoves.push(rightCapture);
+  if (coordinates.x !== 0) {
+    const leftCapture = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
+
+    if (Object.values(Constants.Pieces.PlayerOne).includes(positions[leftCapture])) {
+      validMoves.push(leftCapture);
+    }
+  }
+
+  if (coordinates.x !== 7) {
+    const rightCapture = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
+
+    if (Object.values(Constants.Pieces.PlayerOne).includes(positions[rightCapture])) {
+      validMoves.push(rightCapture);
+    }
   }
 
   const forwardOneCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
-  const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 2].toString()}`;
-
   const forwardOnePiece = positions[forwardOneCoordinates];
-  const forwardTwoPiece = positions[forwardTwoCoordinates];
 
   if (!forwardOnePiece) {
     validMoves.push(forwardOneCoordinates);
   }
 
   if (coordinates.y === 6) {
+    const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 2].toString()}`;
+    const forwardTwoPiece = positions[forwardTwoCoordinates];
+
     if (!forwardOnePiece && !forwardTwoPiece) {
       validMoves.push(forwardTwoCoordinates);
     }
