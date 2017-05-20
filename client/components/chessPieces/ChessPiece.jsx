@@ -4,20 +4,34 @@ import { DragSource } from 'react-dnd';
 import { connect } from 'react-redux';
 
 import Constants from '../../util/constants';
-import { markValidMoves, clearValidMoves } from '../../actions/chessBoardActions';
+import { markValidMoves, clearValidMoves, nextTurn } from '../../actions/chessBoardActions';
 
 import styles from './ChessPiece.scss';
 
 const mapStateToProps = state => ({
+  currentTurn: state.chessBoard.currentTurn,
   positions: state.chessBoard.positions,
 });
 
 const mapDispatchToProps = dispatch => ({
   markValidMoves: (currentPiece, position, positions) => dispatch(markValidMoves(currentPiece, position, positions)),
   clearValidMoves: () => dispatch(clearValidMoves()),
+  nextTurn: currentTurn => dispatch(nextTurn(currentTurn)),
 });
 
 const chessPieceSource = {
+  canDrag(props) {
+    const playerOneTurn = props.currentTurn === 1;
+    const playerOnePiece = Object.values(Constants.Pieces.PlayerOne).includes(props.currentPiece);
+
+    if (playerOneTurn && playerOnePiece) {
+      return true;
+    } else if (!playerOneTurn && !playerOnePiece) {
+      return true;
+    }
+
+    return false;
+  },
   beginDrag(props) {
     props.markValidMoves(props.currentPiece, props.position, props.positions);
 
@@ -25,6 +39,7 @@ const chessPieceSource = {
   },
   endDrag(props) {
     props.clearValidMoves();
+    props.nextTurn(props.currentTurn);
   },
 };
 

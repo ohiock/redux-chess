@@ -6,9 +6,11 @@ import {
   moveChessPiece,
   markValidMoves,
   clearValidMoves,
+  nextTurn,
 } from '../actions/chessBoardActions';
 
 const initialState = {
+  currentTurn: 1,
   positions: { },
   validMoves: [],
   movementLog: [],
@@ -71,11 +73,16 @@ const clearValidMovesReducer = state => Object.assign({}, state, {
   validMoves: [],
 });
 
+const nextTurnReducer = (state, action) => Object.assign({}, state, {
+  currentTurn: action.nextTurn,
+});
+
 const reducerMap = createReducer({
   [setupNewMatch]: state => setupNewMatchReducer(state),
   [moveChessPiece]: (state, action) => moveChessPieceReducer(state, action),
   [markValidMoves]: (state, action) => markValidMovesReducer(state, action),
   [clearValidMoves]: state => clearValidMovesReducer(state),
+  [nextTurn]: (state, action) => nextTurnReducer(state, action),
 }, initialState);
 
 export default reducerMap;

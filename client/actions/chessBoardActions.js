@@ -12,3 +12,6 @@ export const markValidMoves = createAction('markValidMoves', (currentPiece, posi
   validMoves: getValidMoves(currentPiece, position, positions),
 }));
 export const clearValidMoves = createAction('clearValidMoves');
+export const nextTurn = createAction('nextTurn', currentTurn => ({
+  nextTurn: currentTurn === 1 ? 2 : 1,
+}));
