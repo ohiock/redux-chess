@@ -4,12 +4,13 @@ import { DragSource } from 'react-dnd';
 import { connect } from 'react-redux';
 
 import Constants from '../../util/constants';
-import { markValidMoves } from '../../actions/chessBoardActions';
+import { markValidMoves, clearValidMoves } from '../../actions/chessBoardActions';
 
 import styles from './ChessPiece.scss';
 
 const mapDispatchToProps = dispatch => ({
   markValidMoves: (currentPiece, position) => dispatch(markValidMoves(currentPiece, position)),
+  clearValidMoves: () => dispatch(clearValidMoves()),
 });
 
 const chessPieceSource = {
@@ -17,6 +18,9 @@ const chessPieceSource = {
     props.markValidMoves(props.currentPiece, props.position);
 
     return { position: props.position };
+  },
+  endDrag(props) {
+    props.clearValidMoves();
   },
 };
 

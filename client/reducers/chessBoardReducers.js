@@ -5,6 +5,7 @@ import {
   setupNewMatch,
   moveChessPiece,
   markValidMoves,
+  clearValidMoves
 } from '../actions/chessBoardActions';
 
 const initialState = {
@@ -61,10 +62,15 @@ const markValidMovesReducer = (state, action) => Object.assign({}, state, {
   validMoves: action.validMoves,
 });
 
+const clearValidMovesReducer = state => Object.assign({}, state, {
+  validMoves: [],
+});
+
 const reducerMap = createReducer({
   [setupNewMatch]: state => setupNewMatchReducer(state),
   [moveChessPiece]: (state, action) => moveChessPieceReducer(state, action),
   [markValidMoves]: (state, action) => markValidMovesReducer(state, action),
+  [clearValidMoves]: state => clearValidMovesReducer(state),
 }, initialState);
 
 export default reducerMap;

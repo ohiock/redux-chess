@@ -24,11 +24,27 @@ export const getValidP1PawnMoves = (position) => {
   ];
 };
 
+export const getValidP2PawnMoves = (position) => {
+  const coordinates = getCoordinates(position);
+
+  if (coordinates.y === 6) {
+    return [
+      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`,
+      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 2].toString()}`,
+    ];
+  }
+
+  return [
+    `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`,
+  ];
+};
+
 export const getValidMoves = (piece, position) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
       return getValidP1PawnMoves(position);
     case Constants.Pieces.PlayerTwo.Pawn:
+      return getValidP2PawnMoves(position);
     default:
       return [];
   }

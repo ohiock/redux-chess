@@ -23,6 +23,9 @@ const chessSquareTarget = {
 
     return undefined;
   },
+  canDrop(props) {
+    return props.validMoves.includes(props.position);
+  },
 };
 
 const collect = (dndConnect, monitor) => ({

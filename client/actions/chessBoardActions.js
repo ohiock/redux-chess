@@ -11,3 +11,4 @@ export const moveChessPiece = createAction('moveChessPiece', (currentPosition, n
 export const markValidMoves = createAction('markValidMoves', (currentPiece, position) => ({
   validMoves: getValidMoves(currentPiece, position),
 }));
+export const clearValidMoves = createAction('clearValidMoves');
