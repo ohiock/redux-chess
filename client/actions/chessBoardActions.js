@@ -8,7 +8,7 @@ export const moveChessPiece = createAction('moveChessPiece', (currentPosition, n
   currentPosition,
   nextPosition,
 }));
-export const markValidMoves = createAction('markValidMoves', (currentPiece, position) => ({
-  validMoves: getValidMoves(currentPiece, position),
+export const markValidMoves = createAction('markValidMoves', (currentPiece, position, positions) => ({
+  validMoves: getValidMoves(currentPiece, position, positions),
 }));
 export const clearValidMoves = createAction('clearValidMoves');

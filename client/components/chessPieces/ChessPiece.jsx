@@ -8,14 +8,19 @@ import { markValidMoves, clearValidMoves } from '../../actions/chessBoardActions
 
 import styles from './ChessPiece.scss';
 
+const mapStateToProps = state => ({
+  positions: state.chessBoard.positions,
+});
+
 const mapDispatchToProps = dispatch => ({
-  markValidMoves: (currentPiece, position) => dispatch(markValidMoves(currentPiece, position)),
+  markValidMoves: (currentPiece, position, positions) => dispatch(markValidMoves(currentPiece, position, positions)),
   clearValidMoves: () => dispatch(clearValidMoves()),
 });
 
 const chessPieceSource = {
   beginDrag(props) {
-    props.markValidMoves(props.currentPiece, props.position);
+    console.log(props.positions);
+    props.markValidMoves(props.currentPiece, props.position, props.positions);
 
     return { position: props.position };
   },
@@ -24,7 +29,7 @@ const chessPieceSource = {
   },
 };
 
-@connect(null, mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 @DragSource(Constants.DraggableItemTypes.ChessPiece, chessPieceSource, (dndConnect, monitor) => ({
   connectDragSource: dndConnect.dragSource(),
   isDragging: monitor.isDragging(),

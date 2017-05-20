@@ -9,42 +9,80 @@ export const getCoordinates = (position) => {
   };
 };
 
-export const getValidP1PawnMoves = (position) => {
+export const getValidP1PawnMoves = (position, positions) => {
+  const validMoves = [];
   const coordinates = getCoordinates(position);
+
+  const leftAttack = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+  const rightAttack = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+
+  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftAttack])) {
+    validMoves.push(leftAttack);
+  }
+
+  if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightAttack])) {
+    validMoves.push(rightAttack);
+  }
+
+  const forwardOneCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`;
+  const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 2].toString()}`;
+
+  const forwardOnePiece = positions[forwardOneCoordinates];
+  const forwardTwoPiece = positions[forwardTwoCoordinates];
+
+  if (!forwardOnePiece) {
+    validMoves.push(forwardOneCoordinates);
+  }
 
   if (coordinates.y === 1) {
-    return [
-      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`,
-      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 2].toString()}`,
-    ];
+    if (!forwardOnePiece && !forwardTwoPiece) {
+      validMoves.push(forwardTwoCoordinates);
+    }
   }
 
-  return [
-    `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y + 1].toString()}`,
-  ];
+  return validMoves;
 };
 
-export const getValidP2PawnMoves = (position) => {
+export const getValidP2PawnMoves = (position, positions) => {
+  const validMoves = [];
   const coordinates = getCoordinates(position);
 
-  if (coordinates.y === 6) {
-    return [
-      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`,
-      `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 2].toString()}`,
-    ];
+  const leftAttack = `${Constants.Board.Files[coordinates.x - 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
+  const rightAttack = `${Constants.Board.Files[coordinates.x + 1].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
+
+  if (Object.values(Constants.Pieces.PlayerOne).includes(positions[leftAttack])) {
+    validMoves.push(leftAttack);
   }
 
-  return [
-    `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`,
-  ];
+  if (Object.values(Constants.Pieces.PlayerOne).includes(positions[rightAttack])) {
+    validMoves.push(rightAttack);
+  }
+
+  const forwardOneCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 1].toString()}`;
+  const forwardTwoCoordinates = `${Constants.Board.Files[coordinates.x].toString()}${Constants.Board.Ranks[coordinates.y - 2].toString()}`;
+
+  const forwardOnePiece = positions[forwardOneCoordinates];
+  const forwardTwoPiece = positions[forwardTwoCoordinates];
+
+  if (!forwardOnePiece) {
+    validMoves.push(forwardOneCoordinates);
+  }
+
+  if (coordinates.y === 6) {
+    if (!forwardOnePiece && !forwardTwoPiece) {
+      validMoves.push(forwardTwoCoordinates);
+    }
+  }
+
+  return validMoves;
 };
 
-export const getValidMoves = (piece, position) => {
+export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
-      return getValidP1PawnMoves(position);
+      return getValidP1PawnMoves(position, positions);
     case Constants.Pieces.PlayerTwo.Pawn:
-      return getValidP2PawnMoves(position);
+      return getValidP2PawnMoves(position, positions);
     default:
       return [];
   }
