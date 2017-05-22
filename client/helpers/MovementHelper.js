@@ -95,12 +95,24 @@ export const getValidP2PawnMoves = (position, positions) => {
   return validMoves;
 };
 
+export const getValidP1RookMoves = (position, positions) => {
+
+};
+
+export const getValidP2RookMoves = (position, positions) => {
+
+};
+
 export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
       return getValidP1PawnMoves(position, positions);
     case Constants.Pieces.PlayerTwo.Pawn:
       return getValidP2PawnMoves(position, positions);
+    case Constants.Pices.PlayerOne.Rook:
+      return getValidP1RookMoves(position, positions);
+    case Constants.Pices.PlayerTwo.Rook:
+      return getValidP2RookMoves(position, positions);
     default:
       return [];
   }
