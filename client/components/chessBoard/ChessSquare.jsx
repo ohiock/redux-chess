@@ -8,7 +8,7 @@ import styles from './ChessSquare.scss';
 import { moveChessPiece } from '../../actions/chessBoardActions';
 
 const mapStateToProps = state => ({
-  validMoves: state.chessBoard.validMoves
+  validMoves: state.chessBoard.validMoves,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -24,7 +24,7 @@ const chessSquareTarget = {
     return undefined;
   },
   canDrop(props) {
-    return props.validMoves.includes(props.position);
+    return props.validMoves.filter(move => props.position[0] === move[0] && props.position[1] === move[1]).length > 0;
   },
 };
 
@@ -38,7 +38,7 @@ const collect = (dndConnect, monitor) => ({
 export default class ChessSquare extends React.Component {
   static propTypes = {
     validMoves: PropTypes.array.isRequired, // eslint-disable-line
-    position: PropTypes.string.isRequired,
+    position: PropTypes.array.isRequired, // eslint-disable-line
     connectDropTarget: PropTypes.func.isRequired,
     isOver: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
@@ -62,9 +62,11 @@ export default class ChessSquare extends React.Component {
   }
 
   render() {
+    const isValidMove = this.props.validMoves.filter(move => this.props.position[0] === move[0] && this.props.position[1] === move[1]).length > 0;
+
     return this.props.connectDropTarget(
       <div
-        className={`${styles.container} ${this.props.validMoves.includes(this.props.position) ? styles['selected-piece'] : ''}`}
+        className={`${styles.container} ${isValidMove ? styles['selected-piece'] : ''}`}
         style={{ backgroundColor: this.props.color }}
         onClick={this.selectPiece}
       >

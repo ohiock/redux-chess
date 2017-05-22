@@ -47,28 +47,22 @@ export default class ChessBoard extends React.Component {
   }
 
   getSquares(chessBoardPositions) {
-    const files = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     const squares = [];
-    let rowCount = 0;
+
+    let yCoordinate = 0;
+    let xCoordinate = 0;
 
     for (let i = 0; i < this.props.squareCount; i += 1) {
-      let color;
-
-      if (i % 8 === 0) {
-        rowCount += 1;
+      if (i !== 0 && i % 8 === 0) {
+        yCoordinate += 1;
       }
 
-      if (rowCount % 2 === 0) {
-        color = i % 2 === 0
-          ? this.props.squareColorTwo
-          : this.props.squareColorOne;
-      } else {
-        color = i % 2 === 0
-          ? this.props.squareColorOne
-          : this.props.squareColorTwo;
-      }
+      xCoordinate = i - (yCoordinate * 8);
 
-      const position = files[i - ((rowCount - 1) * 8)] + (8 - (rowCount - 1));
+      const position = [xCoordinate, yCoordinate];
+      const color = position.reduce((a, b) => a + b) % 2 === 0
+        ? this.props.squareColorTwo
+        : this.props.squareColorOne;
 
       squares.push(
         <ChessSquare key={i} color={color} position={position} isValidMove={this.props.chessBoard.validMoves.includes(position)}>
