@@ -9,6 +9,14 @@ export const getCoordinates = (position) => {
   };
 };
 
+export const containsRivalPiece = (isPlayerOne, position, positions) => {
+  const piece = isPlayerOne
+    ? Object.values(Constants.Pieces.PlayerTwo).includes(positions[position])
+    : Object.values(Constants.Pieces.PlayerOne).includes(positions[position]);
+
+  return piece;
+};
+
 export const getValidP1PawnMoves = (position, positions) => {
   const validMoves = [];
 
@@ -95,35 +103,53 @@ export const getValidP2PawnMoves = (position, positions) => {
 
 export const getValidRookMoves = (position, positions) => {
   const validMoves = [];
+  const isPlayerOne = Object.values(Constants.Pieces.PlayerOne).includes(positions[position]);
 
   // empty squares below current position
   const downPosition = [position[0], position[1] + 1];
-  while (downPosition[1] <= 7 && !positions[downPosition]) {
+
+  while (downPosition[1] <= 7 && (!positions[downPosition] || containsRivalPiece(isPlayerOne, downPosition, positions))) {
     validMoves.push([downPosition[0], downPosition[1]]);
+
+    if (containsRivalPiece(isPlayerOne, downPosition, positions)) {
+      break;
+    }
 
     downPosition[1] += 1;
   }
 
   // empty squares above current position
   const upPosition = [position[0], position[1] - 1];
-  while (upPosition[1] >= 0 && !positions[upPosition]) {
+  while (upPosition[1] >= 0 && (!positions[upPosition] || containsRivalPiece(isPlayerOne, upPosition, positions))) {
     validMoves.push([upPosition[0], upPosition[1]]);
+
+    if (containsRivalPiece(isPlayerOne, upPosition, positions)) {
+      break;
+    }
 
     upPosition[1] -= 1;
   }
 
   // empty squares to the right of current position
   const rightPosition = [position[0] + 1, position[1]];
-  while (rightPosition[0] <= 7 && !positions[rightPosition]) {
+  while (rightPosition[0] <= 7 && (!positions[rightPosition] || containsRivalPiece(isPlayerOne, rightPosition, positions))) {
     validMoves.push([rightPosition[0], rightPosition[1]]);
+
+    if (containsRivalPiece(isPlayerOne, rightPosition, positions)) {
+      break;
+    }
 
     rightPosition[0] += 1;
   }
 
   // empty squares to the left of current position
   const leftPosition = [position[0] - 1, position[1]];
-  while (leftPosition[0] >= 0 && !positions[leftPosition]) {
+  while (leftPosition[0] >= 0 && (!positions[leftPosition] || containsRivalPiece(isPlayerOne, leftPosition, positions))) {
     validMoves.push([leftPosition[0], leftPosition[1]]);
+
+    if (containsRivalPiece(isPlayerOne, leftPosition, positions)) {
+      break;
+    }
 
     leftPosition[0] -= 1;
   }
