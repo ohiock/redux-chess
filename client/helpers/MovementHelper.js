@@ -1,14 +1,5 @@
 import Constants from '../util/constants';
 
-export const getCoordinates = (position) => {
-  const rawCoordinates = position.split('');
-
-  return {
-    x: Constants.Board.Files.indexOf(rawCoordinates[0]),
-    y: Constants.Board.Ranks.indexOf(parseInt(rawCoordinates[1], 10)),
-  };
-};
-
 export const getPlayer = (piece) => {
   const player = Object.values(Constants.Pieces.PlayerOne).includes(piece)
     ? Constants.Players.PlayerOne
