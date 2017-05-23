@@ -16,6 +16,15 @@ export const containsRivalPiece = (player, position, positions) => {
   return piece;
 };
 
+export const isValidPosition = (position) => {
+  const isValid = position[0] >= 0
+    && position[0] <= 7
+    && position[1] >= 0
+    && position[1] <= 7;
+
+  return isValid;
+};
+
 export const getValidP1PawnMoves = (position, positions) => {
   const validMoves = [];
 
@@ -243,6 +252,61 @@ export const getValidKnightMoves = (position, positions) => {
   return validMoves;
 };
 
+export const getValidBishopMoves = (position, positions) => {
+  const validMoves = [];
+  const player = getPlayer(positions[position]);
+
+  const upLeftDiagonalPosition = [position[0] - 1, position[1] + 1];
+  while (isValidPosition(upLeftDiagonalPosition) && (!positions[upLeftDiagonalPosition] || containsRivalPiece(player, upLeftDiagonalPosition, positions))) {
+    validMoves.push([upLeftDiagonalPosition[0], upLeftDiagonalPosition[1]]);
+
+    if (containsRivalPiece(player, upLeftDiagonalPosition, positions)) {
+      break;
+    }
+
+    upLeftDiagonalPosition[0] -= 1;
+    upLeftDiagonalPosition[1] += 1;
+  }
+
+  const upRightDiagonalPosition = [position[0] + 1, position[1] + 1];
+  while (isValidPosition(upRightDiagonalPosition) && (!positions[upRightDiagonalPosition] || containsRivalPiece(player, upRightDiagonalPosition, positions))) {
+    validMoves.push([upRightDiagonalPosition[0], upRightDiagonalPosition[1]]);
+
+    if (containsRivalPiece(player, upRightDiagonalPosition, positions)) {
+      break;
+    }
+
+    upRightDiagonalPosition[0] += 1;
+    upRightDiagonalPosition[1] += 1;
+  }
+
+  const downLeftDiagonalPosition = [position[0] - 1, position[1] - 1];
+  while (isValidPosition(downLeftDiagonalPosition) && (!positions[downLeftDiagonalPosition] || containsRivalPiece(player, downLeftDiagonalPosition, positions))) {
+    validMoves.push([downLeftDiagonalPosition[0], downLeftDiagonalPosition[1]]);
+
+    if (containsRivalPiece(player, downLeftDiagonalPosition, positions)) {
+      break;
+    }
+
+    downLeftDiagonalPosition[0] -= 1;
+    downLeftDiagonalPosition[1] -= 1;
+  }
+
+  const downRightDiagonalPosition = [position[0] + 1, position[1] - 1];
+  while (isValidPosition(downRightDiagonalPosition) && (!positions[downRightDiagonalPosition] || containsRivalPiece(player, downRightDiagonalPosition, positions))) {
+    validMoves.push([downRightDiagonalPosition[0], downRightDiagonalPosition[1]]);
+
+    if (containsRivalPiece(player, downRightDiagonalPosition, positions)) {
+      break;
+    }
+
+    downRightDiagonalPosition[0] += 1;
+    downRightDiagonalPosition[1] -= 1;
+  }
+
+  return validMoves;
+};
+
 export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
@@ -255,6 +319,9 @@ export const getValidMoves = (piece, position, positions) => {
     case Constants.Pieces.PlayerOne.Knight:
     case Constants.Pieces.PlayerTwo.Knight:
       return getValidKnightMoves(position, positions);
+    case Constants.Pieces.PlayerOne.Bishop:
+    case Constants.Pieces.PlayerTwo.Bishop:
+      return getValidBishopMoves(position, positions);
     default:
       return [];
   }
