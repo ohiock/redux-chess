@@ -26,7 +26,7 @@ export const getValidP1PawnMoves = (position, positions) => {
   if (position[0] !== 0) {
     const leftCapture = [position[0] - 1, position[1] + 1];
 
-    if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[leftCapture])) {
+    if (containsRivalPiece(Constants.Players.PlayerOne, leftCapture, positions)) {
       validMoves.push(leftCapture);
     }
   }
@@ -34,7 +34,7 @@ export const getValidP1PawnMoves = (position, positions) => {
   if (position[0] !== 7) {
     const rightCapture = [position[0] + 1, position[1] + 1];
 
-    if (Object.values(Constants.Pieces.PlayerTwo).includes(positions[rightCapture])) {
+    if (containsRivalPiece(Constants.Players.PlayerOne, rightCapture, positions)) {
       validMoves.push(rightCapture);
     }
   }
@@ -68,7 +68,7 @@ export const getValidP2PawnMoves = (position, positions) => {
   if (position[0] !== 0) {
     const leftCapture = [position[0] - 1, position[1] - 1];
 
-    if (Object.values(Constants.Pieces.PlayerOne).includes(positions[leftCapture])) {
+    if (containsRivalPiece(Constants.Players.PlayerTwo, leftCapture, positions)) {
       validMoves.push(leftCapture);
     }
   }
@@ -76,7 +76,7 @@ export const getValidP2PawnMoves = (position, positions) => {
   if (position[0] !== 7) {
     const rightCapture = [position[0] + 1, position[1] - 1];
 
-    if (Object.values(Constants.Pieces.PlayerOne).includes(positions[rightCapture])) {
+    if (containsRivalPiece(Constants.Players.PlayerTwo, rightCapture, positions)) {
       validMoves.push(rightCapture);
     }
   }
