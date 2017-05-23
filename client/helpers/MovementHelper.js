@@ -13,7 +13,7 @@ export const getValidP1PawnMoves = (position, positions) => {
   const validMoves = [];
 
   if (position[1] === 7) {
-    return [];
+    return validMoves;
   }
 
   if (position[0] !== 0) {
@@ -55,7 +55,7 @@ export const getValidP2PawnMoves = (position, positions) => {
   const validMoves = [];
 
   if (position[1] === 0) {
-    return [];
+    return validMoves;
   }
 
   if (position[0] !== 0) {
@@ -93,12 +93,46 @@ export const getValidP2PawnMoves = (position, positions) => {
   return validMoves;
 };
 
-export const getValidP1RookMoves = (position, positions) => {
+export const getValidRookMoves = (position, positions) => {
+  const validMoves = [];
 
-};
+  // empty squares below current position
+  const downPosition = [position[0], position[1] + 1];
 
-export const getValidP2RookMoves = (position, positions) => {
+  while (downPosition[1] <= 7 && !positions[downPosition]) {
+    validMoves.push([downPosition[0], downPosition[1]]);
 
+    downPosition[1] += 1;
+  }
+
+  // empty squares above current position
+  const upPosition = [position[0], position[1] - 1];
+
+  while (upPosition[1] >= 0 && !positions[upPosition]) {
+    validMoves.push([upPosition[0], upPosition[1]]);
+
+    upPosition[1] -= 1;
+  }
+
+  // empty squares to the right of current position
+  const rightPosition = [position[0] + 1, position[1]];
+
+  while (rightPosition[0] <= 7 && !positions[rightPosition]) {
+    validMoves.push([rightPosition[0], rightPosition[1]]);
+
+    rightPosition[0] += 1;
+  }
+
+  // empty squares to the left of current position
+  const leftPosition = [position[0] - 1, position[1]];
+
+  while (leftPosition[0] >= 0 && !positions[leftPosition]) {
+    validMoves.push([leftPosition[0], leftPosition[1]]);
+
+    leftPosition[0] -= 1;
+  }
+
+  return validMoves;
 };
 
 export const getValidMoves = (piece, position, positions) => {
@@ -107,10 +141,9 @@ export const getValidMoves = (piece, position, positions) => {
       return getValidP1PawnMoves(position, positions);
     case Constants.Pieces.PlayerTwo.Pawn:
       return getValidP2PawnMoves(position, positions);
-    case Constants.Pices.PlayerOne.Rook:
-      return getValidP1RookMoves(position, positions);
-    case Constants.Pices.PlayerTwo.Rook:
-      return getValidP2RookMoves(position, positions);
+    case Constants.Pieces.PlayerOne.Rook:
+    case Constants.Pieces.PlayerTwo.Rook:
+      return getValidRookMoves(position, positions);
     default:
       return [];
   }
