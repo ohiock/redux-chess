@@ -98,7 +98,6 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares below current position
   const downPosition = [position[0], position[1] + 1];
-
   while (downPosition[1] <= 7 && !positions[downPosition]) {
     validMoves.push([downPosition[0], downPosition[1]]);
 
@@ -107,7 +106,6 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares above current position
   const upPosition = [position[0], position[1] - 1];
-
   while (upPosition[1] >= 0 && !positions[upPosition]) {
     validMoves.push([upPosition[0], upPosition[1]]);
 
@@ -116,7 +114,6 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the right of current position
   const rightPosition = [position[0] + 1, position[1]];
-
   while (rightPosition[0] <= 7 && !positions[rightPosition]) {
     validMoves.push([rightPosition[0], rightPosition[1]]);
 
@@ -125,11 +122,96 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the left of current position
   const leftPosition = [position[0] - 1, position[1]];
-
   while (leftPosition[0] >= 0 && !positions[leftPosition]) {
     validMoves.push([leftPosition[0], leftPosition[1]]);
 
     leftPosition[0] -= 1;
+  }
+
+  return validMoves;
+};
+
+export const getValidKnightMoves = (position, positions) => {
+  const validMoves = [];
+
+  const upTwoLeftOne = [position[0] - 1, position[1] + 2];
+  if (!positions[upTwoLeftOne]) {
+    validMoves.push(upTwoLeftOne);
+  }
+
+  const upTwoRightOne = [position[0] + 1, position[1] + 2];
+  if (!positions[upTwoRightOne]) {
+    validMoves.push(upTwoRightOne);
+  }
+
+  const rightTwoUpOne = [position[0] + 2, position[1] + 1];
+  if (!positions[rightTwoUpOne]) {
+    validMoves.push(rightTwoUpOne);
+  }
+
+  const rightTwoDownOne = [position[0] + 2, position[1] - 1];
+  if (!positions[rightTwoDownOne]) {
+    validMoves.push(rightTwoDownOne);
+  }
+
+  const downTwoRightOne = [position[0] + 1, position[1] - 2];
+  if (!positions[downTwoRightOne]) {
+    validMoves.push(downTwoRightOne);
+  }
+
+  const downTwoLeftOne = [position[0] - 1, position[1] - 2];
+  if (!positions[downTwoLeftOne]) {
+    validMoves.push(downTwoLeftOne);
+  }
+
+  const leftTwoUpOne = [position[0] - 2, position[1] + 1];
+  if (!positions[leftTwoUpOne]) {
+    validMoves.push(leftTwoUpOne);
+  }
+
+  const leftTwoDownOne = [position[0] - 2, position[1] - 1];
+  if (!positions[leftTwoDownOne]) {
+    validMoves.push(leftTwoDownOne);
+  }
+
+  const upOneLeftTwo = [position[0] - 2, position[1] + 1];
+  if (!positions[upOneLeftTwo]) {
+    validMoves.push(upOneLeftTwo);
+  }
+
+  const upOneRightTwo = [position[0] + 2, position[1] + 1];
+  if (!positions[upOneRightTwo]) {
+    validMoves.push(upOneRightTwo);
+  }
+
+  const rightOneUpTwo = [position[0] + 1, position[1] + 2];
+  if (!positions[rightOneUpTwo]) {
+    validMoves.push(rightOneUpTwo);
+  }
+
+  const rightOneDownTwo = [position[0] + 1, position[1] - 2];
+  if (!positions[rightOneDownTwo]) {
+    validMoves.push(rightOneDownTwo);
+  }
+
+  const downOneRightTwo = [position[0] + 2, position[1] - 1];
+  if (!positions[downOneRightTwo]) {
+    validMoves.push(downOneRightTwo);
+  }
+
+  const downOneLeftTwo = [position[0] - 2, position[1] - 1];
+  if (!positions[downOneLeftTwo]) {
+    validMoves.push(downOneLeftTwo);
+  }
+
+  const leftOneUpTwo = [position[0] - 1, position[1] + 2];
+  if (!positions[leftOneUpTwo]) {
+    validMoves.push(leftOneUpTwo);
+  }
+
+  const leftOneDownTwo = [position[0] - 1, position[1] - 2];
+  if (!positions[leftOneDownTwo]) {
+    validMoves.push(leftOneDownTwo);
   }
 
   return validMoves;
@@ -144,6 +226,9 @@ export const getValidMoves = (piece, position, positions) => {
     case Constants.Pieces.PlayerOne.Rook:
     case Constants.Pieces.PlayerTwo.Rook:
       return getValidRookMoves(position, positions);
+    case Constants.Pieces.PlayerOne.Knight:
+    case Constants.Pieces.PlayerTwo.Knight:
+      return getValidKnightMoves(position, positions);
     default:
       return [];
   }
