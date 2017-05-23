@@ -9,8 +9,16 @@ export const getCoordinates = (position) => {
   };
 };
 
-export const containsRivalPiece = (isPlayerOne, position, positions) => {
-  const piece = isPlayerOne
+export const getPlayer = (piece) => {
+  const player = Object.values(Constants.Pieces.PlayerOne).includes(piece)
+    ? Constants.Players.PlayerOne
+    : Constants.Players.PlayerTwo;
+
+  return player;
+};
+
+export const containsRivalPiece = (player, position, positions) => {
+  const piece = player === Constants.Players.PlayerOne
     ? Object.values(Constants.Pieces.PlayerTwo).includes(positions[position])
     : Object.values(Constants.Pieces.PlayerOne).includes(positions[position]);
 
@@ -103,15 +111,15 @@ export const getValidP2PawnMoves = (position, positions) => {
 
 export const getValidRookMoves = (position, positions) => {
   const validMoves = [];
-  const isPlayerOne = Object.values(Constants.Pieces.PlayerOne).includes(positions[position]);
+  const player = getPlayer(positions[position]);
 
   // empty squares below current position
   const downPosition = [position[0], position[1] + 1];
 
-  while (downPosition[1] <= 7 && (!positions[downPosition] || containsRivalPiece(isPlayerOne, downPosition, positions))) {
+  while (downPosition[1] <= 7 && (!positions[downPosition] || containsRivalPiece(player, downPosition, positions))) {
     validMoves.push([downPosition[0], downPosition[1]]);
 
-    if (containsRivalPiece(isPlayerOne, downPosition, positions)) {
+    if (containsRivalPiece(player, downPosition, positions)) {
       break;
     }
 
@@ -120,10 +128,10 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares above current position
   const upPosition = [position[0], position[1] - 1];
-  while (upPosition[1] >= 0 && (!positions[upPosition] || containsRivalPiece(isPlayerOne, upPosition, positions))) {
+  while (upPosition[1] >= 0 && (!positions[upPosition] || containsRivalPiece(player, upPosition, positions))) {
     validMoves.push([upPosition[0], upPosition[1]]);
 
-    if (containsRivalPiece(isPlayerOne, upPosition, positions)) {
+    if (containsRivalPiece(player, upPosition, positions)) {
       break;
     }
 
@@ -132,10 +140,10 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the right of current position
   const rightPosition = [position[0] + 1, position[1]];
-  while (rightPosition[0] <= 7 && (!positions[rightPosition] || containsRivalPiece(isPlayerOne, rightPosition, positions))) {
+  while (rightPosition[0] <= 7 && (!positions[rightPosition] || containsRivalPiece(player, rightPosition, positions))) {
     validMoves.push([rightPosition[0], rightPosition[1]]);
 
-    if (containsRivalPiece(isPlayerOne, rightPosition, positions)) {
+    if (containsRivalPiece(player, rightPosition, positions)) {
       break;
     }
 
@@ -144,10 +152,10 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the left of current position
   const leftPosition = [position[0] - 1, position[1]];
-  while (leftPosition[0] >= 0 && (!positions[leftPosition] || containsRivalPiece(isPlayerOne, leftPosition, positions))) {
+  while (leftPosition[0] >= 0 && (!positions[leftPosition] || containsRivalPiece(player, leftPosition, positions))) {
     validMoves.push([leftPosition[0], leftPosition[1]]);
 
-    if (containsRivalPiece(isPlayerOne, leftPosition, positions)) {
+    if (containsRivalPiece(player, leftPosition, positions)) {
       break;
     }
 
@@ -159,84 +167,85 @@ export const getValidRookMoves = (position, positions) => {
 
 export const getValidKnightMoves = (position, positions) => {
   const validMoves = [];
+  const player = getPlayer(positions[position]);
 
   const upTwoLeftOne = [position[0] - 1, position[1] + 2];
-  if (!positions[upTwoLeftOne]) {
+  if (!positions[upTwoLeftOne] || containsRivalPiece(player, upTwoLeftOne, positions)) {
     validMoves.push(upTwoLeftOne);
   }
 
   const upTwoRightOne = [position[0] + 1, position[1] + 2];
-  if (!positions[upTwoRightOne]) {
+  if (!positions[upTwoRightOne] || containsRivalPiece(player, upTwoRightOne, positions)) {
     validMoves.push(upTwoRightOne);
   }
 
   const rightTwoUpOne = [position[0] + 2, position[1] + 1];
-  if (!positions[rightTwoUpOne]) {
+  if (!positions[rightTwoUpOne] || containsRivalPiece(player, rightTwoUpOne, positions)) {
     validMoves.push(rightTwoUpOne);
   }
 
   const rightTwoDownOne = [position[0] + 2, position[1] - 1];
-  if (!positions[rightTwoDownOne]) {
+  if (!positions[rightTwoDownOne] || containsRivalPiece(player, rightTwoDownOne, positions)) {
     validMoves.push(rightTwoDownOne);
   }
 
   const downTwoRightOne = [position[0] + 1, position[1] - 2];
-  if (!positions[downTwoRightOne]) {
+  if (!positions[downTwoRightOne] || containsRivalPiece(player, downTwoRightOne, positions)) {
     validMoves.push(downTwoRightOne);
   }
 
   const downTwoLeftOne = [position[0] - 1, position[1] - 2];
-  if (!positions[downTwoLeftOne]) {
+  if (!positions[downTwoLeftOne] || containsRivalPiece(player, downTwoLeftOne, positions)) {
     validMoves.push(downTwoLeftOne);
   }
 
   const leftTwoUpOne = [position[0] - 2, position[1] + 1];
-  if (!positions[leftTwoUpOne]) {
+  if (!positions[leftTwoUpOne] || containsRivalPiece(player, leftTwoUpOne, positions)) {
     validMoves.push(leftTwoUpOne);
   }
 
   const leftTwoDownOne = [position[0] - 2, position[1] - 1];
-  if (!positions[leftTwoDownOne]) {
+  if (!positions[leftTwoDownOne] || containsRivalPiece(player, leftTwoDownOne, positions)) {
     validMoves.push(leftTwoDownOne);
   }
 
   const upOneLeftTwo = [position[0] - 2, position[1] + 1];
-  if (!positions[upOneLeftTwo]) {
+  if (!positions[upOneLeftTwo] || containsRivalPiece(player, upOneLeftTwo, positions)) {
     validMoves.push(upOneLeftTwo);
   }
 
   const upOneRightTwo = [position[0] + 2, position[1] + 1];
-  if (!positions[upOneRightTwo]) {
+  if (!positions[upOneRightTwo] || containsRivalPiece(player, upOneRightTwo, positions)) {
     validMoves.push(upOneRightTwo);
   }
 
   const rightOneUpTwo = [position[0] + 1, position[1] + 2];
-  if (!positions[rightOneUpTwo]) {
+  if (!positions[rightOneUpTwo] || containsRivalPiece(player, rightOneUpTwo, positions)) {
     validMoves.push(rightOneUpTwo);
   }
 
   const rightOneDownTwo = [position[0] + 1, position[1] - 2];
-  if (!positions[rightOneDownTwo]) {
+  if (!positions[rightOneDownTwo] || containsRivalPiece(player, rightOneDownTwo, positions)) {
     validMoves.push(rightOneDownTwo);
   }
 
   const downOneRightTwo = [position[0] + 2, position[1] - 1];
-  if (!positions[downOneRightTwo]) {
+  if (!positions[downOneRightTwo] || containsRivalPiece(player, downOneRightTwo, positions)) {
     validMoves.push(downOneRightTwo);
   }
 
   const downOneLeftTwo = [position[0] - 2, position[1] - 1];
-  if (!positions[downOneLeftTwo]) {
+  if (!positions[downOneLeftTwo] || containsRivalPiece(player, downOneLeftTwo, positions)) {
     validMoves.push(downOneLeftTwo);
   }
 
   const leftOneUpTwo = [position[0] - 1, position[1] + 2];
-  if (!positions[leftOneUpTwo]) {
+  if (!positions[leftOneUpTwo] || containsRivalPiece(player, leftOneUpTwo, positions)) {
     validMoves.push(leftOneUpTwo);
   }
 
   const leftOneDownTwo = [position[0] - 1, position[1] - 2];
-  if (!positions[leftOneDownTwo]) {
+  if (!positions[leftOneDownTwo] || containsRivalPiece(player, leftOneDownTwo, positions)) {
     validMoves.push(leftOneDownTwo);
   }
 

@@ -7,6 +7,10 @@ const Constants = {
     },
     SquareCount: 64,
   },
+  Players: {
+    PlayerOne: 1,
+    PlayerTwo: 2,
+  },
   Pieces: {
     PlayerOne: {
       Pawn: '♟',
