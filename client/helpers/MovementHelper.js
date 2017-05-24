@@ -307,6 +307,13 @@ export const getValidBishopMoves = (position, positions) => {
   return validMoves;
 };
 
+export const getValidQueenMoves = (position, positions) => {
+  const rookMoves = getValidRookMoves(position, positions);
+  const bishopMoves = getValidBishopMoves(position, positions);
+
+  return rookMoves.concat(bishopMoves);
+};
+
 export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
@@ -322,6 +329,9 @@ export const getValidMoves = (piece, position, positions) => {
     case Constants.Pieces.PlayerOne.Bishop:
     case Constants.Pieces.PlayerTwo.Bishop:
       return getValidBishopMoves(position, positions);
+    case Constants.Pieces.PlayerOne.Queen:
+    case Constants.Pieces.PlayerTwo.Queen:
+      return getValidQueenMoves(position, positions);
     default:
       return [];
   }
