@@ -314,6 +314,23 @@ export const getValidQueenMoves = (position, positions) => {
   return rookMoves.concat(bishopMoves);
 };
 
+export const getValidKingMoves = (position, positions) => {
+  const player = getPlayer(positions[position]);
+
+  const potentialPositions = [
+    [position[0], position[1] + 1], // up
+    [position[0] + 1, position[1] + 1], // up right
+    [position[0] + 1, position[1]], // right
+    [position[0] + 1, position[1] - 1], // down right
+    [position[0], position[1] - 1], // down
+    [position[0] - 1, position[1] - 1], // down left
+    [position[0] - 1, position[1]], // left
+    [position[0] - 1, position[1] + 1], // up left
+  ];
+
+  return potentialPositions.filter(potentialPosition => isValidPosition(potentialPosition) && (!positions[potentialPosition] || containsRivalPiece(player, potentialPosition, positions)));
+};
+
 export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
@@ -332,6 +349,9 @@ export const getValidMoves = (piece, position, positions) => {
     case Constants.Pieces.PlayerOne.Queen:
     case Constants.Pieces.PlayerTwo.Queen:
       return getValidQueenMoves(position, positions);
+    case Constants.Pieces.PlayerOne.King:
+    case Constants.Pieces.PlayerTwo.King:
+      return getValidKingMoves(position, positions);
     default:
       return [];
   }
