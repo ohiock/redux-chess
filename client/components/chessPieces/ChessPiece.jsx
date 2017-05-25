@@ -51,7 +51,6 @@ const chessPieceSource = {
 export default class ChessPiece extends React.Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
-    isDragging: PropTypes.bool.isRequired,
     currentPiece: PropTypes.string,
   };
 

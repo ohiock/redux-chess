@@ -40,7 +40,6 @@ export default class ChessSquare extends React.Component {
     validMoves: PropTypes.array.isRequired, // eslint-disable-line
     position: PropTypes.array.isRequired, // eslint-disable-line
     connectDropTarget: PropTypes.func.isRequired,
-    isOver: PropTypes.bool.isRequired,
     color: PropTypes.string.isRequired,
     children: PropTypes.object, // eslint-disable-line
   };

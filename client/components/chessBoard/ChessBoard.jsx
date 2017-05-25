@@ -60,13 +60,13 @@ export default class ChessBoard extends React.Component {
       xCoordinate = i - (yCoordinate * 8);
 
       const position = [xCoordinate, yCoordinate];
-      const color = position.reduce((a, b) => a + b) % 2 === 0
+      const color = (xCoordinate + yCoordinate) % 2 === 0
         ? this.props.squareColorTwo
         : this.props.squareColorOne;
 
       squares.push(
         <ChessSquare key={i} color={color} position={position} isValidMove={this.props.chessBoard.validMoves.includes(position)}>
-          <ChessPiece currentPiece={chessBoardPositions[position]} position={position} />
+          <ChessPiece currentPiece={chessBoardPositions[position.join(' ')]} position={position} />
         </ChessSquare>,
       );
     }
