@@ -10,8 +10,8 @@ export const getPlayer = (piece) => {
 
 export const containsRivalPiece = (player, position, positions) => {
   const piece = player === Constants.Players.PlayerOne
-    ? Object.values(Constants.Pieces.PlayerTwo).includes(positions[position])
-    : Object.values(Constants.Pieces.PlayerOne).includes(positions[position]);
+    ? Object.values(Constants.Pieces.PlayerTwo).includes(positions[position.join(' ')])
+    : Object.values(Constants.Pieces.PlayerOne).includes(positions[position.join(' ')]);
 
   return piece;
 };
@@ -25,84 +25,59 @@ export const isValidPosition = (position) => {
   return isValid;
 };
 
-export const getValidP1PawnMoves = (position, positions) => {
+export const getValidPawnMoves = (position, positions) => {
   const validMoves = [];
+  const player = getPlayer(positions[position.join(' ')]);
 
-  if (position[1] === 7) {
-    return validMoves;
-  }
+  const potentialPositions = {
+    [Constants.Players.PlayerOne]: [
+      {
+        position: [position[0] - 1, position[1] + 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
+      },
+      {
+        position: [position[0] + 1, position[1] + 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
+      },
+      {
+        position: [position[0], position[1] + 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => !positionsInput[positionInput],
+      },
+      {
+        position: [position[0], position[1] + 2],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => position[1] === 1
+          && !positionsInput[[positionInput[0], positionInput[1] + 1]]
+          && !positionsInput[positionInput],
+      },
+    ],
+    [Constants.Players.PlayerTwo]: [
+      {
+        position: [position[0] - 1, position[1] - 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
+      },
+      {
+        position: [position[0] + 1, position[1] - 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
+      },
+      {
+        position: [position[0], position[1] - 1],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => !positionsInput[positionInput],
+      },
+      {
+        position: [position[0], position[1] - 2],
+        isValidCriteria: (playerInput, positionInput, positionsInput) => position[1] === 6
+          && !positionsInput[[positionInput[0], positionInput[1] - 1]]
+          && !positionsInput[positionInput],
+      },
+    ],
+  };
 
-  if (position[0] !== 0) {
-    const leftCapture = [position[0] - 1, position[1] + 1];
+  for (let i = 0; i < potentialPositions[player].length; i += 1) {
+    const potentialPosition = potentialPositions[player][i].position;
+    const isValidCriteria = potentialPositions[player][i].isValidCriteria;
 
-    if (containsRivalPiece(Constants.Players.PlayerOne, leftCapture, positions)) {
-      validMoves.push(leftCapture);
-    }
-  }
-
-  if (position[0] !== 7) {
-    const rightCapture = [position[0] + 1, position[1] + 1];
-
-    if (containsRivalPiece(Constants.Players.PlayerOne, rightCapture, positions)) {
-      validMoves.push(rightCapture);
-    }
-  }
-
-  const forwardOneCoordinates = [position[0], position[1] + 1];
-  const forwardOnePiece = positions[forwardOneCoordinates];
-
-  if (!forwardOnePiece) {
-    validMoves.push(forwardOneCoordinates);
-  }
-
-  if (position[1] === 1) {
-    const forwardTwoCoordinates = [position[0], position[1] + 2];
-    const forwardTwoPiece = positions[forwardTwoCoordinates];
-
-    if (!forwardOnePiece && !forwardTwoPiece) {
-      validMoves.push(forwardTwoCoordinates);
-    }
-  }
-
-  return validMoves;
-};
-
-export const getValidP2PawnMoves = (position, positions) => {
-  const validMoves = [];
-
-  if (position[1] === 0) {
-    return validMoves;
-  }
-
-  if (position[0] !== 0) {
-    const leftCapture = [position[0] - 1, position[1] - 1];
-
-    if (containsRivalPiece(Constants.Players.PlayerTwo, leftCapture, positions)) {
-      validMoves.push(leftCapture);
-    }
-  }
-
-  if (position[0] !== 7) {
-    const rightCapture = [position[0] + 1, position[1] - 1];
-
-    if (containsRivalPiece(Constants.Players.PlayerTwo, rightCapture, positions)) {
-      validMoves.push(rightCapture);
-    }
-  }
-
-  const forwardOneCoordinates = [position[0], position[1] - 1];
-  const forwardOnePiece = positions[forwardOneCoordinates];
-
-  if (!forwardOnePiece) {
-    validMoves.push(forwardOneCoordinates);
-  }
-
-  if (position[1] === 6) {
-    const forwardTwoCoordinates = [position[0], position[1] - 2];
-    const forwardTwoPiece = positions[forwardTwoCoordinates];
-
-    if (!forwardOnePiece && !forwardTwoPiece) {
-      validMoves.push(forwardTwoCoordinates);
+    if (isValidPosition(potentialPosition) && isValidCriteria(player, potentialPosition, positions)) {
+      validMoves.push(potentialPosition);
     }
   }
 
@@ -111,12 +86,12 @@ export const getValidP2PawnMoves = (position, positions) => {
 
 export const getValidRookMoves = (position, positions) => {
   const validMoves = [];
-  const player = getPlayer(positions[position]);
+  const player = getPlayer(positions[position.join(' ')]);
 
   // empty squares below current position
   const downPosition = [position[0], position[1] + 1];
 
-  while (downPosition[1] <= 7 && (!positions[downPosition] || containsRivalPiece(player, downPosition, positions))) {
+  while (downPosition[1] <= 7 && (!positions[downPosition.join(' ')] || containsRivalPiece(player, downPosition, positions))) {
     validMoves.push([downPosition[0], downPosition[1]]);
 
     if (containsRivalPiece(player, downPosition, positions)) {
@@ -128,7 +103,7 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares above current position
   const upPosition = [position[0], position[1] - 1];
-  while (upPosition[1] >= 0 && (!positions[upPosition] || containsRivalPiece(player, upPosition, positions))) {
+  while (upPosition[1] >= 0 && (!positions[upPosition.join(' ')] || containsRivalPiece(player, upPosition, positions))) {
     validMoves.push([upPosition[0], upPosition[1]]);
 
     if (containsRivalPiece(player, upPosition, positions)) {
@@ -140,7 +115,7 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the right of current position
   const rightPosition = [position[0] + 1, position[1]];
-  while (rightPosition[0] <= 7 && (!positions[rightPosition] || containsRivalPiece(player, rightPosition, positions))) {
+  while (rightPosition[0] <= 7 && (!positions[rightPosition.join(' ')] || containsRivalPiece(player, rightPosition, positions))) {
     validMoves.push([rightPosition[0], rightPosition[1]]);
 
     if (containsRivalPiece(player, rightPosition, positions)) {
@@ -152,7 +127,7 @@ export const getValidRookMoves = (position, positions) => {
 
   // empty squares to the left of current position
   const leftPosition = [position[0] - 1, position[1]];
-  while (leftPosition[0] >= 0 && (!positions[leftPosition] || containsRivalPiece(player, leftPosition, positions))) {
+  while (leftPosition[0] >= 0 && (!positions[leftPosition.join(' ')] || containsRivalPiece(player, leftPosition, positions))) {
     validMoves.push([leftPosition[0], leftPosition[1]]);
 
     if (containsRivalPiece(player, leftPosition, positions)) {
@@ -166,7 +141,7 @@ export const getValidRookMoves = (position, positions) => {
 };
 
 export const getValidKnightMoves = (position, positions) => {
-  const player = getPlayer(positions[position]);
+  const player = getPlayer(positions[position.join(' ')]);
 
   const potentialPositions = [
     // up 2, left 1
@@ -221,12 +196,13 @@ export const getValidKnightMoves = (position, positions) => {
     [position[0] - 1, position[1] - 2],
   ];
 
-  return potentialPositions.filter(potentialPosition => (isValidPosition(position) && (!positions[potentialPosition] || containsRivalPiece(player, potentialPosition, positions))));
+  return potentialPositions.filter(potentialPosition => isValidPosition(position)
+    && (!positions[potentialPosition.join(' ')] || containsRivalPiece(player, potentialPosition, positions)));
 };
 
 export const getValidBishopMoves = (position, positions) => {
   const validMoves = [];
-  const player = getPlayer(positions[position]);
+  const player = getPlayer(positions[position.join(' ')]);
 
   const potentialPositions = [
     { position: [position[0] - 1, position[1] + 1], incrementers: [-1, 1] }, // up, left
@@ -239,7 +215,7 @@ export const getValidBishopMoves = (position, positions) => {
     const { incrementers } = potentialPositions[i];
     let potentialPosition = potentialPositions[i].position;
 
-    while (isValidPosition(potentialPosition) && (!positions[potentialPosition] || containsRivalPiece(player, potentialPosition, positions))) {
+    while (isValidPosition(potentialPosition) && (!positions[potentialPosition.join(' ')] || containsRivalPiece(player, potentialPosition, positions))) {
       validMoves.push([potentialPosition[0], potentialPosition[1]]);
 
       if (containsRivalPiece(player, potentialPosition, positions)) {
@@ -261,7 +237,7 @@ export const getValidQueenMoves = (position, positions) => {
 };
 
 export const getValidKingMoves = (position, positions) => {
-  const player = getPlayer(positions[position]);
+  const player = getPlayer(positions[position.join(' ')]);
 
   const potentialPositions = [
     [position[0], position[1] + 1], // up
@@ -274,15 +250,14 @@ export const getValidKingMoves = (position, positions) => {
     [position[0] - 1, position[1] + 1], // up left
   ];
 
-  return potentialPositions.filter(potentialPosition => isValidPosition(potentialPosition) && (!positions[potentialPosition] || containsRivalPiece(player, potentialPosition, positions)));
+  return potentialPositions.filter(potentialPosition => isValidPosition(potentialPosition) && (!positions[potentialPosition.join(' ')] || containsRivalPiece(player, potentialPosition, positions)));
 };
 
 export const getValidMoves = (piece, position, positions) => {
   switch (piece) {
     case Constants.Pieces.PlayerOne.Pawn:
-      return getValidP1PawnMoves(position, positions);
     case Constants.Pieces.PlayerTwo.Pawn:
-      return getValidP2PawnMoves(position, positions);
+      return getValidPawnMoves(position, positions);
     case Constants.Pieces.PlayerOne.Rook:
     case Constants.Pieces.PlayerTwo.Rook:
       return getValidRookMoves(position, positions);
