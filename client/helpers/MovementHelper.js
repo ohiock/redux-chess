@@ -32,19 +32,19 @@ export const getValidPawnMoves = (position, positions) => {
   const potentialPositions = {
     [Constants.Players.PlayerOne]: [
       {
-        position: [position[0] - 1, position[1] + 1],
+        position: [position[0] - 1, position[1] + 1], // up one, left one
         isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
       },
       {
-        position: [position[0] + 1, position[1] + 1],
+        position: [position[0] + 1, position[1] + 1], // up one, right two
         isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
       },
       {
-        position: [position[0], position[1] + 1],
+        position: [position[0], position[1] + 1], // up one
         isValidCriteria: (playerInput, positionInput, positionsInput) => !positionsInput[positionInput],
       },
       {
-        position: [position[0], position[1] + 2],
+        position: [position[0], position[1] + 2], // up two
         isValidCriteria: (playerInput, positionInput, positionsInput) => position[1] === 1
           && !positionsInput[[positionInput[0], positionInput[1] + 1]]
           && !positionsInput[positionInput],
@@ -52,19 +52,19 @@ export const getValidPawnMoves = (position, positions) => {
     ],
     [Constants.Players.PlayerTwo]: [
       {
-        position: [position[0] - 1, position[1] - 1],
+        position: [position[0] - 1, position[1] - 1], // down one, left one
         isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
       },
       {
-        position: [position[0] + 1, position[1] - 1],
+        position: [position[0] + 1, position[1] - 1], // down one, right one
         isValidCriteria: (playerInput, positionInput, positionsInput) => containsRivalPiece(playerInput, positionInput, positionsInput),
       },
       {
-        position: [position[0], position[1] - 1],
+        position: [position[0], position[1] - 1], // down one
         isValidCriteria: (playerInput, positionInput, positionsInput) => !positionsInput[positionInput],
       },
       {
-        position: [position[0], position[1] - 2],
+        position: [position[0], position[1] - 2], // down two
         isValidCriteria: (playerInput, positionInput, positionsInput) => position[1] === 6
           && !positionsInput[[positionInput[0], positionInput[1] - 1]]
           && !positionsInput[positionInput],
@@ -144,56 +144,23 @@ export const getValidKnightMoves = (position, positions) => {
   const player = getPlayer(positions[position.join(' ')]);
 
   const potentialPositions = [
-    // up 2, left 1
-    [position[0] - 1, position[1] + 2],
-
-    // up 2, right 1
-    [position[0] + 1, position[1] + 2],
-
-    // right 2, up one
-    [position[0] + 2, position[1] + 1],
-
-    // right 2, down 1
-    [position[0] + 2, position[1] - 1],
-
-    // right 2, down 1
-    [position[0] + 2, position[1] - 1],
-
-    // down 2, right 1
-    [position[0] + 1, position[1] - 2],
-
-    // down 2, left 1
-    [position[0] - 1, position[1] - 2],
-
-    // left 2, up one
-    [position[0] - 2, position[1] + 1],
-
-    // keft 2m down 1
-    [position[0] - 2, position[1] - 1],
-
-    // up 1, left 2
-    [position[0] - 2, position[1] + 1],
-
-    // up 1, right 2
-    [position[0] + 2, position[1] + 1],
-
-    // right 1, up 2
-    [position[0] + 1, position[1] + 2],
-
-    // right 1, down 2
-    [position[0] + 1, position[1] - 2],
-
-    // down 1, right 2
-    [position[0] + 2, position[1] - 1],
-
-    // down 1, left 2
-    [position[0] - 2, position[1] - 1],
-
-    // left 1, up 2
-    [position[0] - 1, position[1] + 2],
-
-    // left 1, down 2
-    [position[0] - 1, position[1] - 2],
+    [position[0] - 1, position[1] + 2], // up 2, left 1
+    [position[0] + 1, position[1] + 2], // up 2, right 1
+    [position[0] + 2, position[1] + 1], // right 2, up one
+    [position[0] + 2, position[1] - 1], // right 2, down 1
+    [position[0] + 2, position[1] - 1], // right 2, down 1
+    [position[0] + 1, position[1] - 2], // down 2, right 1
+    [position[0] - 1, position[1] - 2], // down 2, left 1
+    [position[0] - 2, position[1] + 1], // left 2, up one
+    [position[0] - 2, position[1] - 1], // keft 2m down 1
+    [position[0] - 2, position[1] + 1], // up 1, left 2
+    [position[0] + 2, position[1] + 1], // up 1, right 2
+    [position[0] + 1, position[1] + 2], // right 1, up 2
+    [position[0] + 1, position[1] - 2], // right 1, down 2
+    [position[0] + 2, position[1] - 1], // down 1, right 2
+    [position[0] - 2, position[1] - 1], // down 1, left 2
+    [position[0] - 1, position[1] + 2], // left 1, up 2
+    [position[0] - 1, position[1] - 2], // left 1, down 2
   ];
 
   return potentialPositions.filter(potentialPosition => isValidPosition(position)
