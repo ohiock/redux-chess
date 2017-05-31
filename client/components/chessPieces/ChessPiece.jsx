@@ -66,6 +66,10 @@ export default class ChessPiece extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.currentPiece !== this.props.currentPiece;
+  }
+
   render() {
     return this.props.connectDragSource(
       <div className={styles.container}>

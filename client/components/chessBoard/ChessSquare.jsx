@@ -53,6 +53,7 @@ export default class ChessSquare extends React.Component {
 
     this.state = {
       styles: {},
+      isValidMove: false,
     };
   }
 
@@ -60,12 +61,21 @@ export default class ChessSquare extends React.Component {
     this.setState({ className: styles.container });
   }
 
-  render() {
-    const isValidMove = this.props.validMoves.filter(move => this.props.position[0] === move[0] && this.props.position[1] === move[1]).length > 0;
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      isValidMove: nextProps.validMoves.filter(move => nextProps.position[0] === move[0] && nextProps.position[1] === move[1]).length > 0,
+    });
+  }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.children.props.currentPiece !== this.props.children.props.currentPiece
+      || nextState.isValidMove !== this.state.isValidMove;
+  }
+
+  render() {
     return this.props.connectDropTarget(
       <div
-        className={`${styles.container} ${isValidMove ? styles['selected-piece'] : ''}`}
+        className={`${styles.container} ${this.state.isValidMove ? styles['selected-piece'] : ''}`}
         style={{ backgroundColor: this.props.color }}
         onClick={this.selectPiece}
       >
