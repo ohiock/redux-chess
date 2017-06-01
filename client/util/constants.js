@@ -13,20 +13,20 @@ const Constants = {
   },
   Pieces: {
     PlayerOne: {
-      Pawn: '♟',
-      Knight: '♞',
-      Bishop: '♝',
-      Rook: '♜',
-      Queen: '♛',
-      King: '♚',
-    },
-    PlayerTwo: {
       Pawn: '♙',
       Knight: '♘',
       Bishop: '♗',
       Rook: '♖',
       Queen: '♕',
       King: '♔',
+    },
+    PlayerTwo: {
+      Pawn: '♟',
+      Knight: '♞',
+      Bishop: '♝',
+      Rook: '♜',
+      Queen: '♛',
+      King: '♚',
     },
   },
   DraggableItemTypes: {
